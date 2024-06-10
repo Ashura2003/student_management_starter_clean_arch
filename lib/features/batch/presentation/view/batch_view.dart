@@ -20,30 +20,6 @@ class _BatchViewState extends ConsumerState<BatchView> {
   Widget build(BuildContext context) {
     var batchState = ref.watch(batchViewModelProvider);
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Course',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Batch',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: 2, // Update this index according to the selected item
-        onTap: (index) {
-          // Handle navigation logic here
-        },
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -100,22 +76,29 @@ class _BatchViewState extends ConsumerState<BatchView> {
                 const Text('No Batches Found'),
               } else ...{
                 Expanded(
-                    child: ListView.builder(
-                  itemCount: batchState.lstBatches.length,
-                  itemBuilder: (context, index) {
-                    var batch = batchState.lstBatches[index];
-                    return ListTile(
-                      title: Text(batch.batchName),
-                      subtitle: Text(batch.batchId ?? ''),
-                      trailing: IconButton(
-                        icon: const Icon(
-                          Icons.delete,
+                  child: ListView.builder(
+                    itemCount: batchState.lstBatches.length,
+                    itemBuilder: (context, index) {
+                      var batch = batchState.lstBatches[index];
+                      return ListTile(
+                        title: Text(batch.batchName),
+                        subtitle: Text(batch.batchId ?? ''),
+                        trailing: IconButton(
+                          icon: const Icon(
+                            Icons.delete,
+                          ),
+                          onPressed: () {
+                            ref
+                                .read(batchViewModelProvider.notifier)
+                                .deleteBatch(
+                                  batchState.lstBatches[index],
+                                );
+                          },
                         ),
-                        onPressed: () {},
-                      ),
-                    );
-                  },
-                ))
+                      );
+                    },
+                  ),
+                ),
               }
               // Add logic to display list of batches here
             ],

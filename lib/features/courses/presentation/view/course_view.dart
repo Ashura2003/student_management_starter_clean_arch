@@ -85,7 +85,13 @@ class _CourseViewState extends ConsumerState<CourseView> {
                         subtitle: Text(course.courseId ?? ""),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: () {},
+                          onPressed: () {
+                            ref
+                                .read(courseViewModelProvider.notifier)
+                                .deleteCourse(
+                                  courseState.lstCourses[index],
+                                );
+                          },
                         ),
                       );
                     },

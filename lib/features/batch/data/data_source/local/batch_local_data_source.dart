@@ -40,4 +40,13 @@ class BatchLocalDataSource {
       return Left(Failure(error: e.toString()));
     }
   }
+  
+  Future<Either<Failure, bool>> deleteBatch(String batchId) async {
+    try {
+      await hiveService.deleteBatch(batchId);
+      return const Right(true);
+    } catch (e) {
+      return Left(Failure(error: e.toString()));
+    }
+  }
 }

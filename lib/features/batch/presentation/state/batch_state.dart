@@ -30,4 +30,13 @@ class BatchState {
       error: error ?? this.error,
     );
   }
+
+  BatchState deleleBatch(BatchState batch, int index) {
+    return BatchState(
+      lstBatches: BatchEntity != null ? [lstBatches[index]] :lstBatches ..removeAt(index),
+      isLoading: batch.isLoading,
+      error: batch.error,
+      
+    );
+  }
 }

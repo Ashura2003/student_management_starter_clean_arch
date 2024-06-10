@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:student_management_starter/features/home/presentation/viewmodel/home_view_model.dart';
+import 'package:student_management_starter/features/batch/presentation/view/batch_view.dart';
+import 'package:student_management_starter/features/courses/presentation/view/course_view.dart';
+import 'package:student_management_starter/features/home/presentation/view/bottom_view/dashboard_ciew.dart';
+import 'package:student_management_starter/features/home/presentation/view/bottom_view/profile_view.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -10,8 +13,14 @@ class HomeView extends ConsumerStatefulWidget {
 }
 
 class _HomeViewState extends ConsumerState<HomeView> {
+  int selectedIndex = 0;
+  List<Widget> lstScreen = [
+    const DashBoardView(),
+    const CourseView(),
+    const BatchView(),
+    const ProfileView(),
+  ];
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,18 +47,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           ),
           backgroundColor: Colors.green,
         ),
-        body: const Stack(
-          children: [
-            Center(
-              child: Text(
-                'DashBoard',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            )
-          ],
-        ),
+        body: lstScreen[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: const [
@@ -70,8 +68,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
               label: 'Profile',
             ),
           ],
+          currentIndex: selectedIndex,
           onTap: (index) {
-            ref.read(homeViewModelProvider.notifier).openBatchPage();
+            setState(() {
+              selectedIndex = index;
+            });
           },
         ));
   }

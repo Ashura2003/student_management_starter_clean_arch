@@ -30,4 +30,13 @@ class CourseState {
       error: error ?? this.error,
     );
   }
+
+  CourseState deleleCourse(CourseState course, int index) {
+    return CourseState(
+      lstCourses: CourseEntity != null ? [lstCourses[index]] :lstCourses ..removeAt(index),
+      isLoading: course.isLoading,
+      error: course.error,
+      
+    );
+  }
 }

@@ -50,4 +50,17 @@ class CourseLocalDataSource {
       );
     }
   }
+
+  Future<Either<Failure, bool>> deleteCourse(String courseId) async {
+    try {
+      await hiveService.deleteCourse(courseId);
+      return const Right(true);
+    } catch (e) {
+      return Left(
+        Failure(
+          error: e.toString(),
+        ),
+      );
+    }
+  }
 }
